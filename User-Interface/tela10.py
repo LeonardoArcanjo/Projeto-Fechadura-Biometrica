@@ -73,18 +73,12 @@ def teladez():
             global f
             try:
                 f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
-                try:
-                    if f.verifyPassword():
-                        self.showMessage("Sensor Connect\n")
-                    else:
-                        self.showMessage("Sensor not Connected\n")
-                        fechar()
-                except Exception as e:
-                    self.showMessage("Sensor not connected\n")
-                    self.showMessage("Error: " + str(e) + "\n")
-                    self.widget2.after(2000, fechar)
+                self.showMessage("Sensor Connect\n")
             except Exception as e:
                 print('Exception message: ' + str(e))
+                self.showMessage("Sensor not connected\n")
+                self.showMessage("Error: " + str(e) + "\n")
+                self.widget2.after(2000, fechar)
 
             self.showMessage("Waiting for finger...\n")
             acendeLed(LED_BLUE)  # acende o LED azul
@@ -97,45 +91,44 @@ def teladez():
                 self.connectSensor()
             else:
                 pisca_led(LED_GREEN)
-                self.DBAcess(positionIndex)
-
-            unlockDoor()
-
-            self.widget2.after(3000, fechar)
+                nome = DBAcess(positionIndex)
+                self.showMessage(nome)
+                unlockDoor()
+                self.widget2.after(3000, fechar)
 
         def showMessage(self, mensagem):
             self.texto.insert(END, mensagem)
 
-        def DBAcess(self, index):
-            # this function connects optima DB and searches the user associated to fingerprint index
-            # and salves the user's entry in Stream.txt file
-            conn = sqlite3.connect("/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db")
-            cursor = conn.cursor()
-            cursor.execute("""SELECT
-                        first_name AS FIRST_NAME,
-                        last_name AS LAST_NAME,
-                        title AS TITLE
-                        FROM optima WHERE pos_number=?""", (str(index)))
-            rows = cursor.fetchall()
+    def DBAcess(index):
+        # this function connects optima DB and searches the user associated to fingerprint index,
+        # salves the user's entry in Stream.txt file and returns first name and lastname user's as string
+        conn = sqlite3.connect("/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db")
+        cursor = conn.cursor()
+        cursor.execute("""SELECT
+                    first_name AS FIRST_NAME,
+                    last_name AS LAST_NAME,
+                    title AS TITLE
+                    FROM optima WHERE pos_number=?""", (str(index)))
+        rows = cursor.fetchall()
 
-            conn.commit()
-            conn.close()
+        conn.commit()
+        conn.close()
 
-            for row in rows:
-                continue
+        for row in rows:
+            continue
 
-            msg = "Bem vindo " + str(row[0]) + " " + str(row[1])
-            self.texto.insert(END, msg)
+        now = datetime.now()
+        hora = now.strftime("%d/%m/%Y %H:%M:%S")
+        with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
+            arquivo.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + hora + " Entrada\n")
 
-            now = datetime.now()
-            hora = now.strftime("%d/%m/%Y %H:%M:%S")
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
-                arquivo.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + hora + " Entrada\n")
+        with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'a') as file_control:
+            file_control.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + "\n")
 
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'a') as file_control:
-                file_control.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + "\n")
-            
-    def pisca_led(pin):  # rotina para piscar ou o led vermelho ou verde
+        return str(row[0] + " " + row[1])
+
+    def pisca_led(pin):
+        """Blinks the LED that's associate to pin parameter"""
         apagaLed(LED_BLUE)
         acendeLed(pin)
         time.sleep(0.5)
@@ -145,21 +138,23 @@ def teladez():
         time.sleep(0.5)
         apagaLed(pin)
 
-    def fechar():  # fecha tela com o destroy e chama a tela01
+    def fechar():  #
+        """ Destroys the current screen and calls Tela01.py"""
         gpio.setmode(gpio.BOARD)
-        gpio.setup(LED_BLUE, gpio.OUT)
         apagaLed(LED_BLUE)
         gpio.cleanup()
         root.destroy()
         tela01.telaum()
 
-    def configura_GPIO():  # configura o GPIO do Rasp como modo BOARD e os pinos do LED e da trava como SAIDA
+    def configura_GPIO():
+        """Sets GPIO as BOARD mode and LEDS pins as OUTPUT"""
         gpio.setmode(gpio.BOARD)
         gpio.setup(LED_RED, gpio.OUT)
         gpio.setup(LED_GREEN, gpio.OUT)
         gpio.setup(LED_BLUE, gpio.OUT)
 
-    def readSensor():  # le a impressao digital no sensor e retorna o index associado a impressao digital
+    def readSensor():
+        """ Reads fingerprint sensor and returns index user from sensor """
         i = 0
         while f.readImage() is False:
             if i == 1400:
@@ -171,7 +166,7 @@ def teladez():
         return result[0]
 
     def unlockDoor():
-        gpio.setmode(gpio.BOARD)
+        """Set Electric Lock pin as OUTPUT and sends a signal to unlock the door"""
         gpio.setup(LOCK_PIN, gpio.OUT)
         gpio.output(LOCK_PIN, 1)
         time.sleep(0.5)
