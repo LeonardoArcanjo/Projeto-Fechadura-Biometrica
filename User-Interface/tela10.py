@@ -40,6 +40,7 @@ def acendeLed(pino_led):
 
 def apagaLed(pino_led):
     gpio.setmode(gpio.BOARD)
+    gpio.setup(pino_led, gpio.OUT)
     gpio.output(pino_led, 0)
     return
 
@@ -140,7 +141,6 @@ def teladez():
 
     def fechar():  #
         """ Destroys the current screen and calls Tela01.py"""
-        gpio.setmode(gpio.BOARD)
         apagaLed(LED_BLUE)
         gpio.cleanup()
         root.destroy()
