@@ -148,7 +148,7 @@ def telaquatro():
                         "text"] = "First Name: " + p_first_name + "\nLast Name: " + p_last_name + "\nTitle: " + p_title + "\nAdmin: YES"
                     p_password = self.password.get()
                     self.botaoLoad["state"] = DISABLED
-                if p_admin == 0:
+                else:
                     self.msg[
                         "text"] = "First Name: " + p_first_name + "\nLast Name: " + p_last_name + "\nTitle: " + p_title + "\nAdmin: NO"
                     self.botaoLoad["state"] = DISABLED
@@ -162,7 +162,7 @@ def telaquatro():
             p_admin = self.var.get()
 
             # apaga o que foi mostrado no widget msg
-            if (p_first_name != "") and (p_last_name != "") and (p_title != "") and (p_admin == 1) or (p_admin == 0):
+            if (p_first_name != "") and (p_last_name != "") and (p_title != ""):
                 self.msg["text"] = "First Name: \nLast Name: \nTitle: \nAdmin:"
                 self.botaoLoad["state"] = NORMAL
                 if p_admin == 1:

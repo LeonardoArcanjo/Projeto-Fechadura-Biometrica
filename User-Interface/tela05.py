@@ -89,7 +89,7 @@ def telacinco():
                                        stderr=subprocess.PIPE,
                                        stdin=subprocess.PIPE)
 
-            self.prompt.insert(END, msg)
+            self.prompt.insert(END, msg + "\n")
             process.stdin.write(b'\n')
             process.stdin.flush()
             stdout, stderr = process.communicate()

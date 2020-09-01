@@ -77,6 +77,7 @@ def telaoito():
         def fetchData(self):
             """Search name users are in LAB """
             i = 0
+            self.lista.delete(0, END)
             # Abrir o arquivo Control.txt em modo leitura
             with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'r') as arquivo:
                 # laço for para preencher os vetores auxiliares com os nomes
@@ -91,7 +92,7 @@ def telaoito():
 
             # essa funcao serve para deletar tudo que aparece na scroll bar de modo que
             # ao se apertar o botao LOAD novamente, os dados nao apareçam repetidos
-            self.lista.delete(0, END)
+            #self.lista.delete(0, END)
             self.lista.focus_set()
 
         def toQuit(self):
