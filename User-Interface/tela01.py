@@ -1,12 +1,17 @@
-#Title: Biometric Lock User Interface
-#Organization: Optima-UFAM
-#Screen 1: Main Screen
-#Description: Main Screen for the User Interface
-#Especs: Touchscreen LCD 3,5" 480x320
-#Autor: Diego Vieira
-#!/usr/local/bin/python
+"""
+Title: Biometric Lock User Interface
+# Organization: Optima-UFAM
+# Screen 1: Main Screen
+# Description: Main Screen for the User Interface
+# Especs: Touchscreen LCD 3,5" 480x320
+# Autor: Diego Vieira
+# Review: Leonardo Arcanjo
+# Version: 1.0
+"""
+# !/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# Tkinter Package Exception Handling
 try:
     # for Python2
     from Tkinter import *
@@ -14,79 +19,83 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-import RPi.GPIO as GPIO
-import time
-import tela02, tela08, tela10 #importa as telas seguintes
+import RPi.GPIO as GPIO  # Raspberry Pi GPIO Package
+# Other Screens Python Module
+import tela02
+import tela08
+import tela10
 
-#define o pino do botão 
+# Defines switch GPIO
 BUTTON_ENTRY = 37
+
 
 def telaum():
     class ScreenOne:
-        def __init__(self, master=None):   #construtor do layout
-            #frame externo da tela principal
+        def __init__(self, master=None):  # Layout constructor
             self.widget1 = Frame(master)
             self.widget1.pack(fill=X)
 
             fontePadrao = ('Arial', '24')
-            
-            #construtor do botao OPTIONS
+
+            # OPTION button Tkinter attributes
             self.button1 = Button(self.widget1)
             self.button1["text"] = "OPTIONS"
             self.button1["font"] = fontePadrao
             self.button1["height"] = 4
-            self.button1["command"] = doublefuncoptions
-            self.button1.pack(side = TOP, fill=X)
+            self.button1["command"] = screen2
+            self.button1.pack(side=TOP, fill=X)
 
-            #construtor do botao OPEN THE DOOR
+            # OPEN THE DOOR button tkinter attributes
             self.button2 = Button(self.widget1)
             self.button2["text"] = "OPEN THE DOOR"
             self.button2["font"] = fontePadrao
             self.button2["height"] = 5
             self.button2["command"] = openDoor
-            self.button2.pack(side = TOP, fill=X)
-            
-            configura_GPIO() #funcao para configurar o GPIO
+            self.button2.pack(side=TOP, fill=X)
 
-    #metodos
-    def doublefuncoptions(): #chama transição para tela dois
-        fechar()
-        tela02.teladois()
-    
-    def openDoor(): #envia sinal para destravar a trava quando pressionado "OPEN THE DOOR"
-        fechar()
-        tela08.telaoito()
-    
-    def fechar(): #encapsula metodo interno do python para nao gerar excecao
+            configura_GPIO()  # Set GPIO Function
+
+    # Functions
+    def screen2():
+        """
+        Destroys current Screen and calls teladois class in tela02 python module
+        """
         root.destroy()
-    
+        tela02.teladois()
+
+    def openDoor():
+        """
+        Destroys current Screen and calls telaoito class in tela08 python module
+        """
+        root.destroy()
+        tela08.telaoito()
+
     def configura_GPIO():
-        #configura o GPIO do rasp como modo BOARD e o pino do botao como ENTRADA
+        """
+        Sets Raspberry Pi pin as GPIO mode and Input
+        """
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(BUTTON_ENTRY, GPIO.IN)
-    
+
     def checkButton():
-        """a cada 200 milissegundos, o tk.mainloop chama essa rotina para ficar checando se
-            o botao foi pressionado, se sim fecha a tela01.py e chama a tela10.py que eh a
-            tela para a pessoa entrar. Se o botao não for pressionado, fica num loop entre criar
-            a tela01 e checar o botao"""
-        if GPIO.input(BUTTON_ENTRY) == True:
-            fechar()
+        """Every 200 milliseconds, verifies if BUTTON_ENTRY status, by GPIO.input() method. If the method returns TRUE,
+            the current screen is destroyed and tela10 module is called. Otherwise, the function runs a loop"""
+        if GPIO.input(BUTTON_ENTRY):
+            root.destroy()
             tela10.teladez()
-        else:
-            pass
 
         root.after(200, checkButton)
-        
-    #loop de inicialização da tela
+
+    # Tkinter attributes instance
     root = Tk()
     ScreenOne(root)
     root.title("Main Screen")
     root.geometry('478x320')
-    root.overrideredirect(True) #trava ponteiro do mouse e força app no primeiro plano
-    root.after(200, checkButton)
+    root.overrideredirect(True)  # Instruct the OS window manage ignore this widget.
+    # So, minimize, restore and close buttons are hide to user.
+    root.after(200, checkButton)  # Entries in check button status loop.
     root.mainloop()
-    
-    
-if __name__ == "__main__": #permite executar esse script como principal
+
+
+if __name__ == "__main__":  # permite executar esse script como principal
     telaum()
