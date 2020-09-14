@@ -430,3 +430,4 @@ luciana fernandes Visitante 30/04/2020 09:28:54 Saida
 leonardo arcanjo tecnico 30/04/2020 09:29:16 Entrada
 leonardo arcanjo tecnico 30/04/2020 09:51:46 Saida
 >>>>>>> 21547c608ad466e29722de0ed7ece3f4483a7e0f
+leonardo arcanjo tecnico 14/09/2020 09:10:49 Entrada
