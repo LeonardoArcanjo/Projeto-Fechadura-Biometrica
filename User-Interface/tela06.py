@@ -95,8 +95,10 @@ def telaseis():
             self.lista.delete(number)
 
         def fetch_data(self):  # database query main loop
+            # conn = sqlite3.connect(
+            #     '/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')  # instancia o banco de dados
             conn = sqlite3.connect(
-                '/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')  # instancia o banco de dados
+                '/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')  # instancia o banco de dados
             cursor = conn.cursor()
             cursor.execute("""SELECT
                                first_name AS FIRST_NAME,
@@ -126,7 +128,8 @@ def telaseis():
 
     def database_data_delete(numIdx):
         "# This function deletes the user in DB from numIdx is passed as argument"
-        conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+        # conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+        conn = sqlite3.connect('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
         cursor = conn.cursor()
         cursor.execute("""SELECT member_id FROM optima ORDER BY member_id ASC;""")
 

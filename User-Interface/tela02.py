@@ -6,6 +6,7 @@ Title: Biometric Lock User Interface
 # Especs: Touchscreen LCD 3,5" 480x320
 # Autor: Diego Vieira
 # Review: Leonardo Arcanjo
+# version: 1.1
 """
 # !/usr/local/bin/python
 # -*- coding: utf-8 -*-
@@ -100,7 +101,8 @@ def teladois():
                 senha = senha.encode('utf-8')
                 senha = hashlib.sha256(senha).hexdigest()
 
-                conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+                # conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+                conn = sqlite3.connect('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
                 cursor = conn.cursor()
 
                 cursor.execute("""SELECT senhas, admin FROM optima WHERE first_name=?""", (puser,))

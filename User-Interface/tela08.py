@@ -19,7 +19,7 @@ except ImportError:
     from tkinter import *
 
 from pynput.keyboard import Key, Controller
-import RPi.GPIO as gpio
+# import RPi.GPIO as gpio
 import time
 from datetime import datetime
 import tela01
@@ -78,7 +78,8 @@ def telaoito():
             """Search name users are in LAB """
             i = 0
             # Abrir o arquivo Control.txt em modo leitura
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'r') as arquivo:
+            # with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'r') as arquivo:
+            with open('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'r') as arquivo:
                 # laço for para preencher os vetores auxiliares com os nomes
                 # E listar os nomes no scroll bar
                 for linha in arquivo:
@@ -106,12 +107,14 @@ def telaoito():
 
             now = datetime.now()
             hora = now.strftime("%d/%m/%Y %H:%M:%S")
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
+            #with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
+            with open('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
                 arquivo.writelines(str(vetor_nome[idx]) + " " + str(vetor_sobrenome[idx]) + " " + str(
                     vetor_cargo[idx]) + " " + hora + " Saida" + "\n")
 
             j = 0
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'w') as file_control:
+            # with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'w') as file_control:
+            with open('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'w') as file_control:
                 for i in vetor_nome:
                     if i != vetor_nome[idx]:
                         file_control.writelines(
@@ -122,16 +125,16 @@ def telaoito():
             self.lista.delete(idx)
 
             # falta acrescentar as demais coisas
-            gpio.setmode(gpio.BOARD)
-            gpio.setup(LOCK_PIN, gpio.OUT)
-            gpio.output(LOCK_PIN, gpio.HIGH)
-            time.sleep(1)
-            gpio.output(LOCK_PIN, gpio.LOW)
-            time.sleep(0.5)
-            gpio.cleanup()
+            # gpio.setmode(gpio.BOARD)
+            # gpio.setup(LOCK_PIN, gpio.OUT)
+            # gpio.output(LOCK_PIN, gpio.HIGH)
+            # time.sleep(1)
+            # gpio.output(LOCK_PIN, gpio.LOW)
+            # time.sleep(0.5)
+            # gpio.cleanup()
 
             # funcao para voltar para a tela01
-            time.sleep(1)
+            # time.sleep(1)
             backToMain()
 
     def ScrollUp():

@@ -28,7 +28,8 @@ import tela01
 import tela05
 
 # Creates Sqlite file
-conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+# conn = sqlite3.connect('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
+conn = sqlite3.connect('/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db')
 cursor = conn.cursor()
 
 # Formates Table in DB

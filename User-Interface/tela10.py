@@ -23,7 +23,7 @@ import tela01
 import time
 from datetime import datetime
 
-import RPi.GPIO as gpio
+# import RPi.GPIO as gpio
 from pyfingerprint.pyfingerprint import PyFingerprint
 
 # Defines GPIO pins connect to RGB LED and Eletric Magnetic Lock
@@ -33,15 +33,15 @@ LED_BLUE = 36
 LOCK_PIN = 32
 
 
-def acendeLed(pino_led):
-    gpio.output(pino_led, 1)
-    return
+# def acendeLed(pino_led):
+#     gpio.output(pino_led, 1)
+#     return
 
 
-def apagaLed(pino_led):
-    gpio.setmode(gpio.BOARD)
-    gpio.output(pino_led, 0)
-    return
+# def apagaLed(pino_led):
+#     gpio.setmode(gpio.BOARD)
+#     gpio.output(pino_led, 0)
+#     return
 
 
 def teladez():
@@ -81,19 +81,19 @@ def teladez():
                 self.widget2.after(2000, fechar)
 
             self.showMessage("Waiting for finger...\n")
-            acendeLed(LED_BLUE)  # acende o LED azul
+            # acendeLed(LED_BLUE)  # acende o LED azul
             positionIndex = readSensor()
 
             if positionIndex == -1:
                 self.showMessage("No match found!!!\n")
                 self.showMessage("Try again...\n")
-                pisca_led(LED_RED)
+                # pisca_led(LED_RED)
                 self.connectSensor()
             else:
-                pisca_led(LED_GREEN)
+                # pisca_led(LED_GREEN)
                 nome = DBAcess(positionIndex)
                 self.showMessage(nome)
-                unlockDoor()
+                # unlockDoor()
                 self.widget2.after(3000, fechar)
 
         def showMessage(self, mensagem):
@@ -127,31 +127,31 @@ def teladez():
 
         return str(row[0] + " " + row[1])
 
-    def pisca_led(pin):
-        """Blinks the LED that's associate to pin parameter"""
-        apagaLed(LED_BLUE)
-        acendeLed(pin)
-        time.sleep(0.5)
-        apagaLed(pin)
-        time.sleep(0.5)
-        acendeLed(pin)
-        time.sleep(0.5)
-        apagaLed(pin)
+    # def pisca_led(pin):
+    #     """Blinks the LED that's associate to pin parameter"""
+    #     apagaLed(LED_BLUE)
+    #     acendeLed(pin)
+    #     time.sleep(0.5)
+    #     apagaLed(pin)
+    #     time.sleep(0.5)
+    #     acendeLed(pin)
+    #     time.sleep(0.5)
+    #     apagaLed(pin)
 
     def fechar():  #
         """ Destroys the current screen and calls Tela01.py"""
-        gpio.setmode(gpio.BOARD)
-        apagaLed(LED_BLUE)
-        gpio.cleanup()
+        # gpio.setmode(gpio.BOARD)
+        # apagaLed(LED_BLUE)
+        # gpio.cleanup()
         root.destroy()
         tela01.telaum()
 
-    def configura_GPIO():
-        """Sets GPIO as BOARD mode and LEDS pins as OUTPUT"""
-        gpio.setmode(gpio.BOARD)
-        gpio.setup(LED_RED, gpio.OUT)
-        gpio.setup(LED_GREEN, gpio.OUT)
-        gpio.setup(LED_BLUE, gpio.OUT)
+    # def configura_GPIO():
+    #     """Sets GPIO as BOARD mode and LEDS pins as OUTPUT"""
+    #     gpio.setmode(gpio.BOARD)
+    #     gpio.setup(LED_RED, gpio.OUT)
+    #     gpio.setup(LED_GREEN, gpio.OUT)
+    #     gpio.setup(LED_BLUE, gpio.OUT)
 
     def readSensor():
         """ Reads fingerprint sensor and returns index user from sensor """
@@ -165,14 +165,14 @@ def teladez():
         result = f.searchTemplate()
         return result[0]
 
-    def unlockDoor():
-        """Set Electric Lock pin as OUTPUT and sends a signal to unlock the door"""
-        gpio.setup(LOCK_PIN, gpio.OUT)
-        gpio.output(LOCK_PIN, 1)
-        time.sleep(0.5)
-        gpio.output(LOCK_PIN, 0)
-        time.sleep(0.5)
-        gpio.cleanup()
+    # def unlockDoor():
+    #     """Set Electric Lock pin as OUTPUT and sends a signal to unlock the door"""
+    #     gpio.setup(LOCK_PIN, gpio.OUT)
+    #     gpio.output(LOCK_PIN, 1)
+    #     time.sleep(0.5)
+    #     gpio.output(LOCK_PIN, 0)
+    #     time.sleep(0.5)
+    #     gpio.cleanup()
 
     # Tkinter object instance
     root = Tk()

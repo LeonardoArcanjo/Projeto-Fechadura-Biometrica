@@ -81,7 +81,8 @@ def telacinco():
         def run_shell(self):  # metodo que executa o programa example_enroll embutido
             self.prompt.delete(1.0, END)
             msg = "Executing Fingerprint Enroll"
-            path = '/home/pi/github/Projeto-Fechadura-Biometrica/pyfingerprint/src/files/examples/example_enroll.py'
+            # path = '/home/pi/github/Projeto-Fechadura-Biometrica/pyfingerprint/src/files/examples/example_enroll.py'
+            path = '/home/leonardoarcanjo/github/Projeto-Fechadura-Biometrica/pyfingerprint/src/files/examples/example_enroll.py'
 
             # rotina de subprocesso - ESTA FUNCIONANDO - nao mexa nem tente entender
             process = subprocess.Popen(['lxterminal', '-e', 'python3', path],
@@ -98,7 +99,7 @@ def telacinco():
         root.destroy()
         tela03.telatres()
 
-    def ret_screen_four(self):  # retorna a tela anterior - comandado por botao RETURN
+    def ret_screen_four():  # retorna a tela anterior - comandado por botao RETURN
         root.destroy()
         tela04.telaquatro()
 
