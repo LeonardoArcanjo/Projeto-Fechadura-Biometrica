@@ -40,38 +40,46 @@ def telaseis():
                                         rowspan=2, columnspan=2, sticky=NW)
 
             # Listbox Attributes
-            self.lista = Listbox(self.primeiroContainer, width=30, height=10,
-                                 font=('MS', '13'), selectmode=BROWSE)
+            self.lista = Listbox(self.primeiroContainer, width=23, height=8,
+                                 font=('MS', '16'), selectmode=BROWSE)
             self.scroll = Scrollbar(self.primeiroContainer, command=self.lista.yview)
             self.lista.configure(yscrollcommand=self.scroll.set)
             self.lista.pack(side=LEFT)
             self.scroll.pack(side=RIGHT, fill=Y)
 
-            self.fontePadrao = ("Arial", "10")
+            self.fontePadrao = ("Arial", "12", "bold")
+            
+	    # set width and height button in column
+            wb_column = 16
+            hb_column = 5
+            
+            # set width and height button in row
+            wb_row = 15
+            hb_row = 6
 
             # UP Button Attributes
             self.BotaoUp = Button(master, text='UP', font=self.fontePadrao,
-                                  width=19, height=7, command=ScrollUp)
+                                  width=wb_column, height=hb_column, command=ScrollUp)
             self.BotaoUp.grid(row=0, column=2, sticky=NW)
 
             # DOWN Button Attributes
             self.BotaoDown = Button(master, text='DOWN', font=self.fontePadrao,
-                                    width=19, height=6, command=ScrollDown)
+                                    width=wb_column, height=hb_column, command=ScrollDown)
             self.BotaoDown.grid(row=1, column=2, sticky=NW)
 
             # LOAD Button Attributes
             self.BotaoLoad = Button(master, text='LOAD', font=self.fontePadrao,
-                                    width=20, height=6, command=self.fetch_data)
+                                    width=wb_row, height=hb_row, command=self.fetch_data)
             self.BotaoLoad.grid(row=2, column=0, sticky=SW)
 
             # BACK Button Attributes
             self.BotaoBack = Button(master, text="BACK", font=self.fontePadrao,
-                                    width=21, height=6, command=backtoenroll)
+                                    width=wb_column, height=hb_row, command=backtoenroll)
             self.BotaoBack.grid(row=2, column=1, sticky=SW)
 
             # DELETE Button Attributes
             self.BotaoDelete = Button(master, text="DELETE", font=self.fontePadrao,
-                                      width=20, height=6, command=self.run_listbox_delete)
+                                      width=wb_column, height=hb_row, command=self.run_listbox_delete)
             self.BotaoDelete.grid(row=2, column=2, sticky=SW)
 
             # running the db reading in screen

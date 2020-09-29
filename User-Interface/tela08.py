@@ -40,39 +40,49 @@ def telaoito():
             self.primeiroConteiner.grid(row=0, column=0, rowspan=2, columnspan=2,
                                         sticky=NW)
             # Listbox Attributes
-            self.lista = Listbox(self.primeiroConteiner, width=30, height=10,
-                                 font=('MS', '13'), selectmode=BROWSE)
+            self.lista = Listbox(self.primeiroConteiner, width=23, height=8,
+                                 font=('MS', '16'), selectmode=BROWSE)
             self.scroll = Scrollbar(self.primeiroConteiner, command=self.lista.yview)
             self.lista.configure(yscrollcommand=self.scroll.set)
             self.lista.pack(side=LEFT)
             self.scroll.pack(side=RIGHT, fill=Y)
 
-            self.fontePadrao = ('Arial', '10')
+            self.fontePadrao = ('Arial', '12', "bold")
+            # set width and height of column buttons
+            wb_column = 16
+            hb_column = 5
+
+            # set width and height of row
+            wb_row = 15
+            hb_row = 6
 
             # "UP" Button Attributes
             self.BotaoUp = Button(master, text='UP', font=self.fontePadrao,
-                                  width=19, height=7, command=ScrollUp)
+                                  width=wb_column, height=hb_column, command=ScrollUp)
             self.BotaoUp.grid(row=0, column=2, sticky=NW)
 
             # "DOWN" Button Attributes
             self.BotaoDown = Button(master, text='DOWN', font=self.fontePadrao,
-                                    width=19, height=6, command=ScrollDown)
+                                    width=wb_column, height=hb_column, command=ScrollDown)
             self.BotaoDown.grid(row=1, column=2, sticky=NW)
 
             # "QUIT" Button Attributes
-            self.BotaoQuit = Button(master, text='QUIT', font=['Arial', '10', 'bold'],
-                                    width=20, height=6, command=self.toQuit)
+            self.BotaoQuit = Button(master, text='QUIT', font=self.fontePadrao,
+                                    width=wb_column, height=hb_row, command=self.toQuit)
             self.BotaoQuit.grid(row=2, column=2, sticky=SW)
 
             # "LOAD" Button Attributes
             self.BotaoLoad = Button(master, text='LOAD', font=self.fontePadrao,
-                                    width=20, height=6, command=self.fetchData)
+                                    width=wb_row, height=hb_row, command=self.fetchData)
             self.BotaoLoad.grid(row=2, column=0, sticky=SW)
 
             # "BACK" Button Attributes
             self.BotaoBack = Button(master, text='BACK', font=self.fontePadrao,
-                                    width=21, height=6, command=backToMain)
+                                    width=wb_column, height=hb_row, command=backToMain)
             self.BotaoBack.grid(row=2, column=1, sticky=SW)
+
+            # Running db reading in screen 
+            self.fetchData()
 
         def fetchData(self):
             """Search name users are in LAB """
