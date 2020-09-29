@@ -162,8 +162,14 @@ def teladez():
             i = i + 1
             pass
         f.convertImage(0x01)
-        result = f.searchTemplate()
-        return result[0]
+        try:
+            result = f.searchTemplate()
+            return result[0]
+        except:
+            print("Serial Communication lost")
+            gpio.cleanup()
+            root.destroy()
+            tela01.telaum()
 
     def unlockDoor():
         """Set Electric Lock pin as OUTPUT and sends a signal to unlock the door"""

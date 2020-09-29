@@ -73,6 +73,9 @@ def telaseis():
             self.BotaoDelete = Button(master, text="DELETE", font=self.fontePadrao,
                                       width=20, height=6, command=self.run_listbox_delete)
             self.BotaoDelete.grid(row=2, column=2, sticky=SW)
+	    # running db reading in screen
+            self.fetch_data()
+
 
         def run_listbox_delete(self):
             """Calls listbox_data_delete() if messagebox.askyesno() method return True"""

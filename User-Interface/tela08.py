@@ -73,6 +73,9 @@ def telaoito():
             self.BotaoBack = Button(master, text='BACK', font=self.fontePadrao,
                                     width=21, height=6, command=backToMain)
             self.BotaoBack.grid(row=2, column=1, sticky=SW)
+            
+            # Running db reading in screen start
+            self.fetchData()
 
         def fetchData(self):
             """Search name users are in LAB """
