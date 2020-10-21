@@ -21,6 +21,7 @@ except ImportError:
 import sqlite3
 import tela01
 import time
+import os
 from datetime import datetime
 
 import RPi.GPIO as gpio
@@ -79,7 +80,8 @@ def teladez():
                 print('Exception message: ' + str(e))
                 self.showMessage("Sensor not connected\n")
                 self.showMessage("Error: " + str(e) + "\n")
-                self.widget2.after(2000, fechar)
+               # self.widget2.after(2000, fechar)
+                os.system("reboot") 
 
             self.showMessage("Waiting for finger...\n")
             acendeLed(LED_BLUE)  # acende o LED azul
