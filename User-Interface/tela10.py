@@ -87,7 +87,7 @@ def teladez():
             acendeLed(LED_BLUE)  # acende o LED azul
             try:
                 positionIndex = readSensor()
-            except Expection as e:
+            except Exception as e:
                 self.showMessage(e + '\n')
                 self.showMessage("Rebooting...")
                 os.system('reboot')
