@@ -98,7 +98,7 @@ def telacinco():
         root.destroy()
         tela03.telatres()
 
-    def ret_screen_four(self):  # retorna a tela anterior - comandado por botao RETURN
+    def ret_screen_four():  # retorna a tela anterior - comandado por botao RETURN
         root.destroy()
         tela04.telaquatro()
 

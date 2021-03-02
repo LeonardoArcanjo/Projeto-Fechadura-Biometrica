@@ -140,19 +140,23 @@ def telaquatro():
             p_last_name = self.lastname.get()
             p_title = self.title.get()
             p_admin = self.var.get()
+            
 
-            # Adds, in self.msg, the data set by user
-            if self.msg["text"] == "First Name: \nLast Name: \nTitle: \nAdmin:":
+            if p_first_name != "" and p_last_name != "":
                 if p_admin == 1:
                     self.msg[
                         "text"] = "First Name: " + p_first_name + "\nLast Name: " + p_last_name + "\nTitle: " + p_title + "\nAdmin: YES"
+                    
                     p_password = self.password.get()
                     self.botaoLoad["state"] = DISABLED
+                
                 else:
                     self.msg[
                         "text"] = "First Name: " + p_first_name + "\nLast Name: " + p_last_name + "\nTitle: " + p_title + "\nAdmin: NO"
                     self.botaoLoad["state"] = DISABLED
+            
             else:
+                
                 self.msg["text"] = "First Name: \nLast Name: \nTitle: \nAdmin:"
 
         def eraseinput(self):  # metodo que apaga a entrada digitada - comandado pelo botao CANCEL
@@ -161,21 +165,23 @@ def telaquatro():
             p_title = self.title.get()
             p_admin = self.var.get()
 
-            # apaga o que foi mostrado no widget msg
-            if (p_first_name != "") and (p_last_name != "") and (p_title != ""):
-                self.msg["text"] = "First Name: \nLast Name: \nTitle: \nAdmin:"
-                self.botaoLoad["state"] = NORMAL
-                if p_admin == 1:
-                    self.check.toggle()
-                self.firstname.delete(0, END)
-                self.lastname.delete(0, END)
-                self.title.delete(0, END)
-                self.password.delete(0, END)
-                del p_first_name
-                del p_last_name
-                del p_title
-                del p_admin
-                self.botaoFingerprint["state"] = NORMAL
+            self.msg["text"] = "First Name: \nLast Name: \nTitle: \nAdmin:"
+            
+            if p_admin == 1:
+                self.check.toggle()
+                
+            self.firstname.delete(0, END)
+            self.lastname.delete(0, END)
+            self.title.delete(0, END)
+            self.password.delete(0, END)
+            
+            del p_first_name
+            del p_last_name
+            del p_title
+            del p_admin
+            
+            self.botaoFingerprint["state"] = NORMAL
+            self.botaoLoad["state"] = NORMAL
 
         def enabledb(self):
             """Inserts the data input by user in DB"""
@@ -188,6 +194,10 @@ def telaquatro():
 
             pfirstname = p_first_name.casefold()
             plastname = p_last_name.casefold()
+            
+            if(pfirstname == "") and (plastname == ""):
+                self.msg["text"] = "Please, Type a valid data"
+                raise Exception("InvalidAttributeError")
 
             # Exception Handling to verify copies
             try:
@@ -234,42 +244,34 @@ def telaquatro():
 
                 tela05.telacinco()
 
-            except:  # se o python levantar uma excecao - ocorre esse loop
-                if self.msg[
-                    "text"] == "First Name: " + p_first_name + "\n Last Name: " + p_last_name + "\n Title: " + p_title + "\n Admin: YES":
+            except sqlite3.Error as e:  # se o python levantar uma excecao - ocorre esse loop
+                erro = ' '.join(e.args)
+                
+                erro = erro.split(" ")
+                
+                if erro[0] == 'UNIQUE':
                     self.msg["text"] = "Name already enrolled. Input new data."
-                    self.botaoLoad["state"] = DISABLED
-                    self.botaoFingerprint["state"] = DISABLED
-                    self.check.toggle()
-                    self.firstname.delete(0, END)
-                    self.lastname.delete(0, END)
-                    self.password.delete(0, END)
-                    self.title.delete(0, END)
-                    del p_first_name
-                    del p_last_name
-                    del p_title
-                    del p_password
-                    del p_admin
-                    self.botaoFingerprint["state"] = NORMAL
-                    self.botaoLoad["state"] = NORMAL
-                elif self.msg[
-                    "text"] == "First Name: " + p_first_name + "\n Last Name: " + p_last_name + "\n Title: " + p_title + "\n Admin: NO":
-                    self.msg["text"] = "Name already enrolled. Input new data."
-                    self.botaoLoad["state"] = DISABLED
-                    self.botaoFingerprint["state"] = DISABLED
-                    self.firstname.delete(0, END)
-                    self.lastname.delete(0, END)
-                    self.title.delete(0, END)
-                    self.password.delete(0, END)
-                    del p_first_name
-                    del p_last_name
-                    del p_title
-                    del p_password
-                    del p_admin
-                    self.botaoFingerprint["state"] = NORMAL
-                    self.botaoLoad["state"] = NORMAL
                 else:
-                    self.msg["text"] = "First Name: \n Last Name: \n Title: \n Admin:"
+                    self.msg["text"] = ' '.join(erro)
+                
+                self.botaoLoad["state"] = DISABLED
+                self.botaoFingerprint["state"] = DISABLED
+                self.check.toggle()
+                
+                self.firstname.delete(0, END)
+                self.lastname.delete(0, END)
+                self.password.delete(0, END)
+                self.title.delete(0, END)
+                    
+                del p_first_name
+                del p_last_name
+                del p_title
+                del p_password
+                del p_admin
+                
+                self.botaoFingerprint["state"] = NORMAL
+                self.botaoLoad["state"] = NORMAL
+                    
 
     def returntohome():
         """Destroys current screen and calls tela01 module"""

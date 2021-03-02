@@ -23,3 +23,16 @@
 21/01/2020 13:31:50 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: técnico 	Admin:YES
 06/02/2020 10:09:32 - tela04 - INFO -- First Name: Devid 	Last Name: Aluno 	Title: Aluno 	Admin:NO
 06/02/2020 11:26:44 - tela04 - INFO -- First Name: Leonardo 	Last Name: Arcanjo 	Title: Técnico 	Admin:YES
+02/03/2021 14:27:09 - __main__ - INFO -- First Name: Manoel 	Last Name: Leonardo 	Title: Tecnico 	Admin:NO
+02/03/2021 14:43:33 - __main__ - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:NO
+02/03/2021 14:45:19 - tela04 - INFO -- First Name:  	Last Name:  	Title:  	Admin:NO
+02/03/2021 14:53:30 - tela04 - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:NO
+02/03/2021 15:34:08 - __main__ - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:NO
+02/03/2021 15:34:29 - tela04 - INFO -- First Name:  	Last Name:  	Title:  	Admin:NO
+02/03/2021 15:42:06 - __main__ - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:NO
+02/03/2021 16:04:44 - tela04 - INFO -- First Name: Manoel 	Last Name: Leonardo 	Title: Tecnico 	Admin:NO
+02/03/2021 16:11:01 - __main__ - INFO -- First Name:  	Last Name:  	Title:  	Admin:NO
+02/03/2021 16:12:02 - tela04 - INFO -- First Name: Antonio 	Last Name: Arcanjo 	Title: Visitante 	Admin:NO
+02/03/2021 16:37:17 - __main__ - INFO -- First Name:  	Last Name:  	Title:  	Admin:NO
+02/03/2021 16:38:43 - __main__ - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:YES
+02/03/2021 16:40:43 - __main__ - INFO -- First Name: leonardo 	Last Name: antonio 	Title: tecnico 	Admin:NO

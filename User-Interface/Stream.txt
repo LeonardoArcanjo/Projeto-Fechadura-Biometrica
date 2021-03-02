@@ -548,3 +548,10 @@ leonardo arcanjo tecnico 27/10/2020 10:56:40 Saida
 eduardo cotta Professor 01/03/2021 10:22:35 Saida
 leonardo arcanjo tecnico 01/03/2021 10:22:57 Entrada
 leonardo arcanjo tecnico 02/03/2021 10:53:15 Entrada
+manoel leonardo tecnico 02/03/2021 14:44:22 Entrada
+manoel leonardo tecnico 02/03/2021 15:23:01 Saida
+leonardo arcanjo tecnico 02/03/2021 15:23:06 Saida
+antonio arcanjo Visitante 02/03/2021 16:13:41 Entrada
+manoel leonardo Tecnico 02/03/2021 16:14:07 Entrada
+antonio arcanjo Visitante 02/03/2021 16:14:37 Saida
+manoel leonardo Tecnico 02/03/2021 16:14:42 Saida
