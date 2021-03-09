@@ -25,9 +25,9 @@ except ImportError:
 from pynput.keyboard import (Key, Controller)
 import sqlite3
 from pyfingerprint.pyfingerprint import PyFingerprint  # from pyfingerprint(package) pyfingerprint(module)
-# import Pyfingerprint(Class)
 # importa telas que interagem com tela atual
 import tela03
+from logs.ErrorLog import writeError
 
 
 def telaseis():
@@ -116,6 +116,9 @@ def telaseis():
                 self.lista.insert(END, row)
 
             self.lista.focus_set()
+            
+        def __str__(self):
+            return "Tela06.py"
 
     def ScrollDown():
         keyboard = Controller()
@@ -171,14 +174,17 @@ def telaseis():
 
             if f.verifyPassword() is False:
                 raise ValueError('The given fingerprint sensor password is wrong!')
+            
             try:
                 if f.deleteTemplate(indexSensor):
                     print('Index Apagado!')
             except Exception as e:
+                writeError(ScreenSix.__str__, e)
                 print('Operacao falhou')
                 print('Excecao: ' + str(e))
 
         except Exception as e:
+            writeError(ScreenSix.__str__, e)
             print('The Fingerprint sensor could not be initialized!')
             print('Exception message: ' + str(e))
             # tentando fazer um loop pra tentar reiniciar a conexão com o sensor

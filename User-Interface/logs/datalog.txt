@@ -36,3 +36,21 @@
 02/03/2021 16:37:17 - __main__ - INFO -- First Name:  	Last Name:  	Title:  	Admin:NO
 02/03/2021 16:38:43 - __main__ - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:YES
 02/03/2021 16:40:43 - __main__ - INFO -- First Name: leonardo 	Last Name: antonio 	Title: tecnico 	Admin:NO
+03/03/2021 08:23:14 - __main__ - INFO -- First Name: Manoel 	Last Name: Leonardo 	Title: Tecnico 	Admin:NO
+03/03/2021 08:36:38 - __main__ - INFO -- First Name: thalisson 	Last Name: torres 	Title: mestrando 	Admin:NO
+03/03/2021 08:38:01 - tela04 - INFO -- First Name: leo 	Last Name: arcanjo 	Title: tecnico 	Admin:NO
+03/03/2021 08:42:22 - __main__ - INFO -- First Name: leo 	Last Name: arcanjo 	Title: tecnico 	Admin:NO
+03/03/2021 08:44:50 - __main__ - INFO -- First Name: manu 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 08:47:13 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+03/03/2021 08:50:20 - __main__ - INFO -- First Name: leo 	Last Name: arcanjo 	Title: tecnico 	Admin:NO
+03/03/2021 08:51:55 - tela04 - INFO -- First Name: leo 	Last Name: arcanjo 	Title: tecnico 	Admin:NO
+03/03/2021 08:53:30 - tela04 - INFO -- First Name: Leonardo 	Last Name: Arcanjo 	Title: Tecnico 	Admin:YES
+03/03/2021 09:01:31 - __main__ - INFO -- First Name: manuela 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:04:32 - tela04 - INFO -- First Name: manuela 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:06:24 - tela04 - INFO -- First Name: manuela 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:09:23 - tela04 - INFO -- First Name: manu 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:25:18 - tela04 - INFO -- First Name: manu 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:27:25 - tela04 - INFO -- First Name: manu 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+03/03/2021 09:41:54 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+04/03/2021 08:29:35 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+04/03/2021 10:14:30 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES

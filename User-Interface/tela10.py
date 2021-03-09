@@ -85,10 +85,11 @@ def teladez():
 
             self.showMessage("Waiting for finger...\n")
             acendeLed(LED_BLUE)  # acende o LED azul
+            
             try:
                 positionIndex = readSensor()
             except Exception as e:
-                self.showMessage(e + '\n')
+                self.showMessage(str(e) + '\n')
                 self.showMessage("Rebooting...")
                 os.system('reboot')
 

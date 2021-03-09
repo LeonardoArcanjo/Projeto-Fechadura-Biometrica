@@ -133,6 +133,9 @@ def telaquatro():
             self.botaoFingerprint["height"] = 4
             self.botaoFingerprint["command"] = self.enabledb
             self.botaoFingerprint.grid(row=6, column=2, padx=0, pady=0, sticky=NW)
+        
+        def __str__(self):
+            return "tela04.py"
 
         def showinput(self):
             # Get attributes from user
@@ -226,7 +229,7 @@ def telaquatro():
                 # creating custom logger
                 logger = logging.getLogger(__name__)
                 # handler setting
-                f_handler = logging.FileHandler('datalog.txt')
+                f_handler = logging.FileHandler('logs/datalog.txt')
                 f_handler.setLevel(logging.DEBUG)
                 # setting format
                 f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s -- %(message)s',
@@ -256,7 +259,9 @@ def telaquatro():
                 
                 self.botaoLoad["state"] = DISABLED
                 self.botaoFingerprint["state"] = DISABLED
-                self.check.toggle()
+                
+                if p_admin == 1:
+                    self.check.toggle()
                 
                 self.firstname.delete(0, END)
                 self.lastname.delete(0, END)

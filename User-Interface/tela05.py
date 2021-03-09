@@ -20,6 +20,7 @@ except ImportError:
 import tela04, tela03
 # importa bibliotecas utilizadas pelos metodos da classe
 import subprocess, sys, os
+import sqlite3
 
 
 def telacinco():
@@ -99,6 +100,20 @@ def telacinco():
         tela03.telatres()
 
     def ret_screen_four():  # retorna a tela anterior - comandado por botao RETURN
+        conn = sqlite3.connect("/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db")
+        cursor = conn.cursor()
+        
+        cursor.execute("""SELECT * FROM optima WHERE pos_number is ?""", (None,))
+        
+        row = cursor.fetchall()
+        index = row[0]
+        index = index[0]
+        
+        cursor.execute(" DELETE FROM optima WHERE member_id is ?", (index,))
+        
+        conn.commit()
+        conn.close()
+        
         root.destroy()
         tela04.telaquatro()
 

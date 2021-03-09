@@ -54,6 +54,9 @@ def telaum():
             self.button2.pack(side=TOP, fill=X)
 
             configura_GPIO()  # Set GPIO Function
+        
+        def __str__(self):
+            return "Tela01.py"
 
     # Functions
     def screen2():
