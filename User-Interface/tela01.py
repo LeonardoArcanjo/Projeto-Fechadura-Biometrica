@@ -22,8 +22,8 @@ except ImportError:
 import RPi.GPIO as GPIO  # Raspberry Pi GPIO Package
 # Other Screens Python Module
 import tela02
+import tela07
 import tela08
-import tela10
 
 # Defines switch GPIO
 BUTTON_ENTRY = 37
@@ -71,7 +71,7 @@ def telaum():
         Destroys current Screen and calls telaoito class in tela08 python module
         """
         root.destroy()
-        tela08.telaoito()
+        tela07.telasete()
 
     def configura_GPIO():
         """
@@ -85,7 +85,7 @@ def telaum():
             the current screen is destroyed and tela10 module is called. Otherwise, the function runs a loop"""
         if GPIO.input(BUTTON_ENTRY):
             root.destroy()
-            tela10.teladez()
+            tela08.telaoito()
 
         root.after(200, checkButton)
 

@@ -1,173 +1,201 @@
 """
-# Title: Biometric Lock User Interface
-# Organization: Optima-UFAM
-# Screen 8: Checkout Screen
-# Description: Screen to check who is inside the lab and wants to leave.
-# Especs: Touchscreen LCD 3,5" 480x320
-# Autor: Leonardo Arcanjo
-# Revison: Leonardo Arcanjo
+#Title: Biometric Lock User Interface
+#Organization: Optima-UFAM
+#Screen 10: Check-in Screen
+#Description: Check-in Screen for the User Interface
+#Especs: Touchscreen LCD 3,5" 480x320
+#Author: Leonardo Arcanjo
+#Review: Leonardo Arcanjo
 """
 # !/usr/local/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding: uft-8 -*-
 
 # Tkinter Package Exception Handling
 try:
-    # for python2
+    # for Python2
     from Tkinter import *
 except ImportError:
-    # for python3
+    # for Python3
     from tkinter import *
 
-from pynput.keyboard import Key, Controller
-import RPi.GPIO as gpio
-import time
-from datetime import datetime
+import sqlite3
 import tela01
+import time
+import os
+from datetime import datetime
 
-LOCK_PIN = 32  # GPIO connect to Electric Magnetic Lock
+import RPi.GPIO as gpio
+from pyfingerprint.pyfingerprint import PyFingerprint
+
+# Defines GPIO pins connect to RGB LED and Eletric Magnetic Lock
+LED_RED = 40
+LED_GREEN = 38
+LED_BLUE = 36
+LOCK_PIN = 32
+
+
+def acendeLed(pino_led):
+    gpio.output(pino_led, 1)
+    return
+
+
+def apagaLed(pino_led):
+    gpio.setmode(gpio.BOARD)
+    gpio.setup(pino_led, gpio.OUT)
+    gpio.output(pino_led, 0)
+    return
 
 
 def telaoito():
-    # vetores de apoio para armazenamento das pessoas que estao no datalog
-    vetor_nome = []
-    vetor_sobrenome = []
-    vetor_cargo = []
-
     class ScreenEight:
         def __init__(self, master=None):
+            self.widget1 = Frame(master)
+            self.widget1["pady"] = 10
+            self.widget1.pack()
 
-            self.primeiroConteiner = Frame(master)
-            self.primeiroConteiner.grid(row=0, column=0, rowspan=2, columnspan=2,
-                                        sticky=NW)
-            # Listbox Attributes
-            self.lista = Listbox(self.primeiroConteiner, width=23, height=8,
-                                 font=('MS', '16'), selectmode=BROWSE)
-            self.scroll = Scrollbar(self.primeiroConteiner, command=self.lista.yview)
-            self.lista.configure(yscrollcommand=self.scroll.set)
-            self.lista.pack(side=LEFT)
-            self.scroll.pack(side=RIGHT, fill=Y)
+            self.widget2 = Frame(master)
+            self.widget2["padx"] = 10
+            self.widget2.pack()
 
-            self.fontePadrao = ('Arial', '12', "bold")
+            self.titulo = Label(self.widget1, text="Check-in Screen")
+            self.titulo["font"] = ("Arial", "20", "bold")
+            self.titulo.pack()
 
-            # set width and height from column buttons
-            wb_column = 16
-            hb_column = 5
+            self.texto = Text(self.widget2)
+            self.texto["relief"] = SUNKEN
+            self.texto["height"] = 15
+            self.texto.pack()
 
-            # set width and height from row buttons
-            wb_row = 15
-            hb_row = 6
+            configura_GPIO()  # Sets the Raspberry Pi GPIO
+            self.texto.insert(END, "Initializing the sensor\n")
+            self.widget2.after(1000, self.connectSensor)  # this method calls the funcion connectSensor after 1 second.
 
-            # "UP" Button Attributes
-            self.BotaoUp = Button(master, text='UP', font=self.fontePadrao,
-                                  width=wb_column, height=hb_column, command=ScrollUp)
-            self.BotaoUp.grid(row=0, column=2, sticky=NW)
+        def connectSensor(self):
+            # this function tries to connect the Fingerprint sensor e shows message of confirmation or not
+            global f
+            try:
+                f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
+                self.showMessage("Sensor Connect\n")
+            except Exception as e:
+                print('Exception message: ' + str(e))
+                self.showMessage("Sensor not connected\n")
+                self.showMessage("Error: " + str(e) + "\n")
+               # self.widget2.after(2000, fechar)
+                os.system("reboot") 
 
-            # "DOWN" Button Attributes
-            self.BotaoDown = Button(master, text='DOWN', font=self.fontePadrao,
-                                    width=wb_column, height=hb_column, command=ScrollDown)
-            self.BotaoDown.grid(row=1, column=2, sticky=NW)
-
-            # "QUIT" Button Attributes
-            self.BotaoQuit = Button(master, text='QUIT', font=self.fontePadrao,
-                                    width=wb_column, height=hb_row, command=self.toQuit)
-            self.BotaoQuit.grid(row=2, column=2, sticky=SW)
-
-            # "LOAD" Button Attributes
-            self.BotaoLoad = Button(master, text='LOAD', font=self.fontePadrao,
-                                    width=wb_row, height=hb_row, command=self.fetchData)
-            self.BotaoLoad.grid(row=2, column=0, sticky=SW)
-
-            # "BACK" Button Attributes
-            self.BotaoBack = Button(master, text='BACK', font=self.fontePadrao,
-                                    width=wb_column, height=hb_row, command=backToMain)
-            self.BotaoBack.grid(row=2, column=1, sticky=SW)
+            self.showMessage("Waiting for finger...\n")
+            acendeLed(LED_BLUE)  # acende o LED azul
             
-            # Running db reading in screen start
-            self.fetchData()
+            try:
+                positionIndex = readSensor()
+            except Exception as e:
+                self.showMessage(str(e) + '\n')
+                self.showMessage("Rebooting...")
+                os.system('reboot')
 
-        def fetchData(self):
-            """Search name users are in LAB """
-            i = 0
-            self.lista.delete(0, END)
-            # Abrir o arquivo Control.txt em modo leitura
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'r') as arquivo:
-                # laço for para preencher os vetores auxiliares com os nomes
-                # E listar os nomes no scroll bar
-                for linha in arquivo:
-                    nomes = linha.split()
-                    vetor_nome.insert(i, nomes[0])
-                    vetor_sobrenome.insert(i, nomes[1])
-                    vetor_cargo.insert(i, nomes[2])
-                    self.lista.insert(END, str(nomes[0] + " " + nomes[1]) + " " + nomes[2])
-                    i += 1
+            if positionIndex == -1:
+                self.showMessage("No match found!!!\n")
+                self.showMessage("Try again...\n")
+                pisca_led(LED_RED)
+                self.connectSensor()
+            else:
+                pisca_led(LED_GREEN)
+                nome = DBAcess(positionIndex)
+                self.showMessage(nome)
+                unlockDoor()
+                self.widget2.after(3000, fechar)
 
-            # essa funcao serve para deletar tudo que aparece na scroll bar de modo que
-            # ao se apertar o botao LOAD novamente, os dados nao apareçam repetidos
-            #self.lista.delete(0, END)
-            self.lista.focus_set()
+        def showMessage(self, mensagem):
+            self.texto.insert(END, mensagem)
 
-        def toQuit(self):
-            # esse metodo retorna uma lista com os items da lista/scroll bar
-            items = self.lista.curselection()
-            pos = 0
+    def DBAcess(index):
+        # this function connects optima DB and searches the user associated to fingerprint index,
+        # salves the user's entry in Stream.txt file and returns first name and lastname user's as string
+        conn = sqlite3.connect("/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/optima.db")
+        cursor = conn.cursor()
+        cursor.execute("""SELECT
+                    first_name AS FIRST_NAME,
+                    last_name AS LAST_NAME,
+                    title AS TITLE
+                    FROM optima WHERE pos_number=?""", (str(index)))
+        rows = cursor.fetchall()
 
-            # laço for para pegar o Indice do item/pessoa que irá sair
-            for i in items:
-                idx = int(i) - pos
-                pos += 1
+        conn.commit()
+        conn.close()
 
-            now = datetime.now()
-            hora = now.strftime("%d/%m/%Y %H:%M:%S")
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
-                arquivo.writelines(str(vetor_nome[idx]) + " " + str(vetor_sobrenome[idx]) + " " + str(
-                    vetor_cargo[idx]) + " " + hora + " Saida" + "\n")
+        for row in rows:
+            continue
 
-            j = 0
-            with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'w') as file_control:
-                for i in vetor_nome:
-                    if i != vetor_nome[idx]:
-                        file_control.writelines(
-                            str(vetor_nome[j]) + " " + str(vetor_sobrenome[j]) + " " + str(vetor_cargo[j]) + '\n')
-                    j += 1
+        now = datetime.now()
+        hora = now.strftime("%d/%m/%Y %H:%M:%S")
+        with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Stream.txt', 'a') as arquivo:
+            arquivo.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + hora + " Entrada\n")
 
-            # método para apagar na lista/scroll bar
-            self.lista.delete(idx)
+        with open('/home/pi/github/Projeto-Fechadura-Biometrica/User-Interface/Control.txt', 'a') as file_control:
+            file_control.writelines(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + "\n")
 
-            # falta acrescentar as demais coisas
-            gpio.setmode(gpio.BOARD)
-            gpio.setup(LOCK_PIN, gpio.OUT)
-            gpio.output(LOCK_PIN, gpio.HIGH)
-            time.sleep(1)
-            gpio.output(LOCK_PIN, gpio.LOW)
-            time.sleep(0.5)
-            gpio.cleanup()
+        return str(row[0] + " " + row[1])
 
-            # funcao para voltar para a tela01
-            time.sleep(1)
-            backToMain()
+    def pisca_led(pin):
+        """Blinks the LED that's associate to pin parameter"""
+        apagaLed(LED_BLUE)
+        acendeLed(pin)
+        time.sleep(0.5)
+        apagaLed(pin)
+        time.sleep(0.5)
+        acendeLed(pin)
+        time.sleep(0.5)
+        apagaLed(pin)
 
-    def ScrollUp():
-        keyboard = Controller()
-        keyboard.press(Key.up)
-        keyboard.release(Key.up)
-
-    def ScrollDown():
-        keyboard = Controller()
-        keyboard.press(Key.down)
-        keyboard.release(Key.down)
-
-    def backToMain():
+    def fechar():  #
+        """ Destroys the current screen and calls Tela01.py"""
+        apagaLed(LED_BLUE)
+        gpio.cleanup()
         root.destroy()
         tela01.telaum()
 
-    # Tkinker Object Instance
+    def configura_GPIO():
+        """Sets GPIO as BOARD mode and LEDS pins as OUTPUT"""
+        gpio.setmode(gpio.BOARD)
+        gpio.setup(LED_RED, gpio.OUT)
+        gpio.setup(LED_GREEN, gpio.OUT)
+        gpio.setup(LED_BLUE, gpio.OUT)
+
+    def readSensor():
+        """ Reads fingerprint sensor and returns index user from sensor """
+        i = 0
+        while f.readImage() is False:
+            if i == 1400:
+                fechar()
+            i = i + 1
+            pass
+        f.convertImage(0x01)
+        try:
+            result = f.searchTemplate()
+            return result[0]
+        except:
+            print("Serial Communication lost")
+            gpio.cleanup()
+            root.destroy()
+            tela01.telaum()
+
+    def unlockDoor():
+        """Set Electric Lock pin as OUTPUT and sends a signal to unlock the door"""
+        gpio.setup(LOCK_PIN, gpio.OUT)
+        gpio.output(LOCK_PIN, 1)
+        time.sleep(0.5)
+        gpio.output(LOCK_PIN, 0)
+        time.sleep(0.5)
+        gpio.cleanup()
+
+    # Tkinter object instance
     root = Tk()
     ScreenEight(root)
-    root.title("Checkout Screen")
-    root.geometry('478x320')
+    root.title("Check-in Screen")
+    root.geometry("478x320")
     root.attributes("-fullscreen", True)
     root.mainloop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     telaoito()
