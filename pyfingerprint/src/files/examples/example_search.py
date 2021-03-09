@@ -49,7 +49,7 @@ try:
 
     if ( positionNumber == -1 ):
         print('No match found!')
-        exit(0)
+        exit(0) 
     else:
         print('Found template at position #' + str(positionNumber))
         print('The accuracy score is: ' + str(accuracyScore))
@@ -62,6 +62,7 @@ try:
 
     ## Downloads the characteristics of template loaded in charbuffer 1
     characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
+    print(characterics)
 
     ## Hashes characteristics of template
     print('SHA-2 hash of template: ' + hashlib.sha256(characterics).hexdigest())

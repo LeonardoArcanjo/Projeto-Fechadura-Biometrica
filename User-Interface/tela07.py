@@ -103,11 +103,10 @@ def telasete():
 
             # essa funcao serve para deletar tudo que aparece na scroll bar de modo que
             # ao se apertar o botao LOAD novamente, os dados nao apareçam repetidos
-            #self.lista.delete(0, END)
             self.lista.focus_set()
 
         def toQuit(self):
-            # esse metodo retorna uma lista com os items da lista/scroll bar
+            # esse metodo retorna uma tupla com os items da lista/scroll bar
             items = self.lista.curselection()
             pos = 0
 
@@ -133,7 +132,6 @@ def telasete():
             # método para apagar na lista/scroll bar
             self.lista.delete(idx)
 
-            # falta acrescentar as demais coisas
             gpio.setmode(gpio.BOARD)
             gpio.setup(LOCK_PIN, gpio.OUT)
             gpio.output(LOCK_PIN, gpio.HIGH)

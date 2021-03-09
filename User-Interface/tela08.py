@@ -26,6 +26,7 @@ from datetime import datetime
 
 import RPi.GPIO as gpio
 from pyfingerprint.pyfingerprint import PyFingerprint
+from logs.ErrorLog import writeError
 
 # Defines GPIO pins connect to RGB LED and Eletric Magnetic Lock
 LED_RED = 40
@@ -69,6 +70,9 @@ def telaoito():
             configura_GPIO()  # Sets the Raspberry Pi GPIO
             self.texto.insert(END, "Initializing the sensor\n")
             self.widget2.after(1000, self.connectSensor)  # this method calls the funcion connectSensor after 1 second.
+            
+        def __str__(self):
+            return "tela08.py"
 
         def connectSensor(self):
             # this function tries to connect the Fingerprint sensor e shows message of confirmation or not
@@ -80,7 +84,6 @@ def telaoito():
                 print('Exception message: ' + str(e))
                 self.showMessage("Sensor not connected\n")
                 self.showMessage("Error: " + str(e) + "\n")
-               # self.widget2.after(2000, fechar)
                 os.system("reboot") 
 
             self.showMessage("Waiting for finger...\n")
@@ -136,7 +139,7 @@ def telaoito():
 
         return str(row[0] + " " + row[1])
 
-    def pisca_led(pin):
+    def pisca_led(pin): 
         """Blinks the LED that's associate to pin parameter"""
         apagaLed(LED_BLUE)
         acendeLed(pin)
