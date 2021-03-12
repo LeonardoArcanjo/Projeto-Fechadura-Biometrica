@@ -1,0 +1,10 @@
+11/03/2021 - 11:05:26 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x75af1228> - parameters are of unsupported type
+11/03/2021 - 11:09:35 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x75ae43d8> - parameters are of unsupported type
+11/03/2021 - 14:34:39 - in Tela05.py - name 'Pyfingerprint' is not defined
+12/03/2021 - 10:13:13 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x75b075d0> - parameters are of unsupported type
+12/03/2021 - 14:30:32 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x74e3a618> - name 'tela05' is not defined
+12/03/2021 - 14:34:25 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x759ee5d0> - unsupported operand type(s) for <<: 'bytes' and 'int'
+12/03/2021 - 14:34:47 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x759ee5d0> - parameters are of unsupported type
+12/03/2021 - 14:36:26 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x74ecfed0> - The received packet do not begin with a valid header!
+12/03/2021 - 14:36:30 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x74ecfed0> - parameters are of unsupported type
+12/03/2021 - 14:37:41 - in <function telacinco.<locals>.ScreenFive.__str__ at 0x74edaed0> - unsupported operand type(s) for <<: 'bytes' and 'int'

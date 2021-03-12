@@ -40,7 +40,7 @@ def telaseis():
                                         rowspan=2, columnspan=2, sticky=NW)
 
             # Listbox Attributes
-            self.lista = Listbox(self.primeiroContainer, width=23, height=8,
+            self.lista = Listbox(self.primeiroContainer, width=24, height=8,
                                  font=('MS', '16'), selectmode=BROWSE)
             self.scroll = Scrollbar(self.primeiroContainer, command=self.lista.yview)
             self.lista.configure(yscrollcommand=self.scroll.set)

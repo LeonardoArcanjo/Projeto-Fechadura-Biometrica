@@ -54,3 +54,17 @@
 03/03/2021 09:41:54 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
 04/03/2021 08:29:35 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
 04/03/2021 10:14:30 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+11/03/2021 10:27:39 - tela04 - INFO -- First Name: manoel 	Last Name: leonardo 	Title: tecnico 	Admin:NO
+11/03/2021 10:29:35 - tela04 - INFO -- First Name: manoel 	Last Name: leonardo 	Title: visitante 	Admin:NO
+12/03/2021 10:13:25 - tela04 - INFO -- First Name: Manoel 	Last Name: Leonardo 	Title: Visitante 	Admin:NO
+12/03/2021 14:19:05 - tela04 - INFO -- First Name: manuela 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+12/03/2021 14:22:10 - __main__ - INFO -- First Name: manuela 	Last Name: arcanjo 	Title: visitante 	Admin:NO
+12/03/2021 14:22:58 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:30:17 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:33:59 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:36:00 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:36:00 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:37:19 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:37:19 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:37:19 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES
+12/03/2021 14:39:00 - tela04 - INFO -- First Name: leonardo 	Last Name: arcanjo 	Title: tecnico 	Admin:YES

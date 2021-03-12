@@ -129,7 +129,7 @@ def teladois():
                     self.mensagem['text'] = "Access Denied"
 
             except:
-                self.mensagem['text'] = "User does not exist"
+                self.mensagem["text"] = "User does not exist"
 
     def returntohome():
         """Destroys current screen and calls tela01 module"""
